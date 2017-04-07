@@ -6,7 +6,7 @@ var jsonfile = require('jsonfile');
 var mkdirp = require('mkdirp');
 var deepEqual = require('deep-equal');
 
-module.exports = function (options, initialState) {
+module.exports = function windowStateKeeper(options, initialState) {
   var app = electron.app || electron.remote.app;
   var screen = electron.screen || electron.remote.screen;
   var state;
