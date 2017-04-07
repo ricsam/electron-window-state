@@ -41,7 +41,7 @@ app.on('ready', function () {
 
 ## API
 
-#### windowStateKeeper(opts)
+#### windowStateKeeper(opts, [initialState])
 
 Note: Don't call this function before the `ready` event is fired.
 
@@ -73,6 +73,13 @@ Note: Don't call this function before the `ready` event is fired.
 
   Should we automatically restore the window to full screen, if it was last
   closed full screen. Defaults to `true`
+
+`saveToDisk` - *Boolean*
+
+  Should we save the state to disk? Defaults to `true`
+
+##### initialState (optional)
+A provided state object, retrieved manually.
 
 ### state object
 
@@ -130,6 +137,9 @@ const windowState = windowStateKeeper({
 
   Saves the current state of the given `BrowserWindow`. This exists mostly for
   legacy purposes, and in most cases it's better to just use `manage`.
+
+`getState()` - *Function*
+  Retrieve the state object.
 
 ## License
 

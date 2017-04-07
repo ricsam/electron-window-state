@@ -6,7 +6,7 @@ var jsonfile = require('jsonfile');
 var mkdirp = require('mkdirp');
 var deepEqual = require('deep-equal');
 
-module.exports = function (options) {
+module.exports = function (options, initialState) {
   var app = electron.app || electron.remote.app;
   var screen = electron.screen || electron.remote.screen;
   var state;
@@ -17,7 +17,8 @@ module.exports = function (options) {
     file: 'window-state.json',
     path: app.getPath('userData'),
     maximize: true,
-    fullScreen: true
+    fullScreen: true,
+    saveToDisk: true
   }, options);
   var fullStoreFileName = path.join(config.path, config.file);
 
@@ -94,6 +95,8 @@ module.exports = function (options) {
       updateState(win);
     }
 
+    if (!config.saveToDisk) return;
+
     // Save state
     try {
       mkdirp.sync(path.dirname(fullStoreFileName));
@@ -146,7 +149,7 @@ module.exports = function (options) {
 
   // Load previous state
   try {
-    state = jsonfile.readFileSync(fullStoreFileName);
+    state = !!initialState ? initialState : jsonfile.readFileSync(fullStoreFileName);
   } catch (err) {
     // Don't care
   }
@@ -167,6 +170,7 @@ module.exports = function (options) {
     get height() { return state.height; },
     get isMaximized() { return state.isMaximized; },
     get isFullScreen() { return state.isFullScreen; },
+    get state() { return state; },
     saveState: saveState,
     unmanage: unmanage,
     manage: manage
