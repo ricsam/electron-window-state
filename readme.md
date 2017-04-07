@@ -139,6 +139,7 @@ const windowState = windowStateKeeper({
   legacy purposes, and in most cases it's better to just use `manage`.
 
 `getState()` - *Function*
+
   Retrieve the state object.
 
 ## License
